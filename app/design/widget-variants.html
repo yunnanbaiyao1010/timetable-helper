@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    width:1200px; height:1330px; overflow:hidden;
+    font-family:-apple-system,"MiSans","HarmonyOS Sans SC","Microsoft YaHei UI",sans-serif;
+    background:
+      radial-gradient(700px 420px at 12% 6%, rgba(150,180,255,.55), transparent 62%),
+      radial-gradient(760px 460px at 92% 26%, rgba(255,196,150,.42), transparent 64%),
+      radial-gradient(620px 500px at 46% 96%, rgba(168,226,214,.42), transparent 66%),
+      linear-gradient(160deg,#eef2f8 0%,#f6f1ec 52%,#eaf0f6 100%);
+  }
+  .stage { padding:54px 62px; }
+  .kicker { font-size:22px; color:#8b96a8; letter-spacing:.14em; margin-bottom:26px; font-weight:600; }
+
+  /* ---------- 小组件公共 ---------- */
+  .w {
+    background:rgba(255,255,255,.93);
+    border-radius:34px;
+    box-shadow:0 18px 46px rgba(36,52,78,.13), 0 2px 6px rgba(36,52,78,.05);
+    position:relative; overflow:hidden;
+    color:#1b2432;
+  }
+  .w4x2 { width:880px; height:452px; padding:34px 38px; }
+  .w2x2 { width:452px; height:452px; padding:30px 32px; }
+
+  .label { display:flex; align-items:center; gap:14px; margin:0 0 14px 4px; }
+  .tag { font-size:22px; font-weight:700; color:#41607f; letter-spacing:.02em; }
+  .tag small { font-weight:500; color:#8b96a8; margin-left:10px; letter-spacing:0; }
+
+  /* ---------- A 款：时间轴 ---------- */
+  .a-head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:26px; }
+  .a-date { font-size:36px; font-weight:700; letter-spacing:-.01em; }
+  .a-week { font-size:24px; color:#93a0b3; font-weight:600; }
+  .row { display:flex; gap:26px; align-items:flex-start; }
+  .col-time { width:112px; flex:0 0 112px; text-align:right; }
+  .t-num { font-size:36px; font-weight:700; font-variant-numeric:tabular-nums; letter-spacing:-.02em; }
+  .t-num.dim { color:#aab4c4; }
+  .bar { width:7px; border-radius:4px; align-self:stretch; margin:6px 4px 0 0; }
+  .bar.course { background:linear-gradient(#8b6ef3,#6f8ff5); }
+  .bar.todo { background:linear-gradient(#ffb340,#ff8a3d); }
+  .body { flex:1; min-width:0; }
+  .title { font-size:34px; font-weight:650; letter-spacing:-.01em; line-height:1.18; }
+  .sub { font-size:24px; color:#8b96a8; margin-top:8px; font-weight:500; }
+  .sub.warn { color:#e8862a; font-weight:650; }
+  .divider { height:1px; background:#eef1f6; margin:24px 0 24px 138px; }
+  .chip { position:absolute; right:38px; bottom:32px; font-size:21px; color:#a6b0c0; font-weight:600; }
+  .dot { display:inline-block; width:9px; height:9px; border-radius:50%; background:#8b6ef3; margin-right:9px; vertical-align:2px; }
+
+  /* ---------- B 款：下一节聚焦 ---------- */
+  .b { padding:36px 40px; display:flex; flex-direction:column; justify-content:space-between; }
+  .b-eyebrow { font-size:25px; font-weight:650; color:#41607f; display:flex; align-items:center; gap:12px; }
+  .pill { background:#eef3ff; color:#4a6cf0; padding:5px 16px; border-radius:999px; font-size:21px; font-weight:700; }
+  .b-main { display:flex; align-items:center; gap:34px; margin-top:2px; }
+  .b-clock { font-size:104px; font-weight:750; letter-spacing:-.045em; line-height:.92; font-variant-numeric:tabular-nums;
+             background:linear-gradient(160deg,#3a4a63,#7b5ce6); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .b-txt .title { font-size:40px; }
+  .b-txt .sub { font-size:25px; margin-top:10px; }
+  .b-progress { height:9px; border-radius:99px; background:#edf0f6; overflow:hidden; margin-top:22px; }
+  .b-progress i { display:block; height:100%; border-radius:99px; background:linear-gradient(90deg,#8b6ef3,#6f8ff5); }
+
+  /* ---------- C 款：2x2 ---------- */
+  .c { display:flex; flex-direction:column; justify-content:space-between; }
+  .c-top { display:flex; justify-content:space-between; align-items:baseline; }
+  .c-date { font-size:26px; font-weight:700; color:#41607f; letter-spacing:.02em; }
+  .c-badge { font-size:20px; font-weight:700; color:#e8862a; background:#fff3e2; border-radius:99px; padding:4px 13px; }
+  .c-clock { font-size:88px; font-weight:750; letter-spacing:-.045em; line-height:1; font-variant-numeric:tabular-nums;
+             background:linear-gradient(160deg,#3a4a63,#7b5ce6); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .c-name { font-size:32px; font-weight:650; line-height:1.2; }
+  .c-room { font-size:23px; color:#8b96a8; margin-top:8px; font-weight:500; }
+
+  .grid2 { display:flex; gap:52px; align-items:flex-start; }
+  .stack { display:flex; flex-direction:column; gap:16px; }
+  .gap { height:44px; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="kicker">课表助手 · 桌面小组件 视觉稿（数据取自 11/19 周四 第12周）</div>
+
+  <!-- A -->
+  <div class="label"><span class="tag">A 款 时间轴<small>4×2 · 信息最全</small></span></div>
+  <div class="w w4x2">
+    <div class="a-head">
+      <div class="a-date">11月19日 周四</div>
+      <div class="a-week">第 12 周</div>
+    </div>
+    <div class="row">
+      <div class="col-time"><div class="t-num">14:00</div></div>
+      <div class="bar course"></div>
+      <div class="body">
+        <div class="title">AI大模型应用开发</div>
+        <div class="sub">仁爱214 · 严新巧 · 至 17:40</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="row">
+      <div class="col-time"><div class="t-num dim">15:00</div></div>
+      <div class="bar todo"></div>
+      <div class="body">
+        <div class="title">课业汇报 <span style="font-size:22px;color:#b6bfcc;font-weight:500">· 待办</span></div>
+        <div class="sub warn">距截止 3 小时 49 分</div>
+      </div>
+    </div>
+    <div class="chip"><span class="dot"></span>待办 3</div>
+  </div>
+
+  <div class="gap"></div>
+
+  <!-- B + C -->
+  <div class="label"><span class="tag">B 款 聚焦下一节<small>4×2 · 最醒目</small></span><span class="tag" style="margin-left:56px">C 款 方形<small>2×2 · 最省位</small></span></div>
+  <div class="grid2">
+    <div class="w w4x2 b">
+      <div class="b-eyebrow">下一节 <span class="pill">2 小时 49 分后</span></div>
+      <div class="b-main">
+        <div class="b-clock">14:00</div>
+        <div class="b-txt">
+          <div class="title">AI大模型应用开发</div>
+          <div class="sub">仁爱214 · 严新巧</div>
+        </div>
+      </div>
+      <div class="b-progress"><i style="width:44%"></i></div>
+    </div>
+
+    <div class="w w2x2 c">
+      <div class="c-top">
+        <div class="c-date">周四 11/19</div>
+        <div class="c-badge">待办 3</div>
+      </div>
+      <div class="c-clock">14:00</div>
+      <div>
+        <div class="c-name">AI大模型应用开发</div>
+        <div class="c-room">仁爱214</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

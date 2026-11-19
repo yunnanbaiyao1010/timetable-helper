@@ -1,0 +1,11 @@
+{
+  "name": "课表助手 · 孙维",
+  "short_name": "课表助手",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#F2F4F8",
+  "theme_color": "#F2F4F8",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

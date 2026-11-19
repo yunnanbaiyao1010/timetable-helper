@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">课表助手</string>
+    <string name="title_activity_main">课表助手</string>
+    <string name="package_name">com.sunwei.timetable</string>
+    <string name="custom_url_scheme">com.sunwei.timetable</string>
+    <string name="widget_today_name">今日课表</string>
+    <string name="widget_today_desc">今天的课与日程，最多显示 3 条</string>
+</resources>

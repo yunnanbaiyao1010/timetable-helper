@@ -1,0 +1,32 @@
+# 依赖
+node_modules/
+
+# 构建产物（由 node sync-web.js / npx cap sync android 生成）
+app/www/
+app/android/app/src/main/assets/public/
+app/android/app/src/main/assets/capacitor.config.json
+app/android/app/src/main/assets/capacitor.plugins.json
+app/android/capacitor-cordova-android-plugins/
+
+# Gradle / Android 构建
+app/android/.gradle/
+app/android/build/
+app/android/app/build/
+app/android/local.properties
+app/android/.idea/
+
+# 打包产物与签名
+*.apk
+*.aab
+*.apks
+*.jks
+*.keystore
+
+# 设计稿脚本跑出来的临时 Chrome 配置
+app/design/.chrome/
+
+# 编辑器与系统
+.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini

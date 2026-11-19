@@ -1,0 +1,17 @@
+{
+  "appId": "com.sunwei.timetable",
+  "appName": "课表助手",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "plugins": {
+    "CapacitorHttp": {
+      "enabled": true,
+      "connectTimeout": 15000,
+      "readTimeout": 30000
+    }
+  },
+  "android": {
+    "backgroundColor": "#F2F4F8",
+    "adjustMarginsForEdgeToEdge": "force"
+  }
+}
